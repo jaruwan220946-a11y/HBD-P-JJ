@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday 🎂</title>
+    <title>Happy Birthday Project 🎂</title>
     <style>
         * {
             box-sizing: border-box;
@@ -117,26 +117,26 @@
 </head>
 <body>
 
-    <div id="text-above">เปิดๆๆๆๆ</div>
+    <div id="text-above">🎁 จิ้มเปิดกล่องของขวัญเล๊ยยย!</div>
 
     <div class="container">
         <!-- แสดงกล่องของขวัญตอนเริ่ม -->
-        <div id="main-display" class="display-item" onclick="openGift()"><img id="gift-img" src="gift-box.gif" style="width:200px; height:auto;"></div>
+        <div id="main-display" class="display-item" onclick="openGift()">🎁</div>
         
         <!-- รูปภาพเจ้าของวันเกิด -->
-        <img id="birthday-img" src="picpjj.jpg" alt="Birthday Person">
+        <img id="birthday-img" src="birthday-girl.jpg" alt="Birthday Person">
         
         <!-- เค้ก GIF อันเล็กใต้รูปภาพ -->
-        <img id="small-cake-gif" src="cakelit.gif" alt="Mini Cake">
+        <img id="small-cake-gif" src="small-cake.gif" alt="Mini Cake">
     </div>
 
     <div class="btn-container">
-        <button id="ready-btn" onclick="startCountdown()">พร้อม!</button>
+        <button id="ready-btn" onclick="startCountdown()">พร้อมแล้ว!</button>
     </div>
 
     <div id="blessing-text"></div>
 
-    <audio id="hbd-music" src="hbd.mp3" loop></audio>
+    <audio id="hbd-music" src="hbd-song.mp3" loop></audio>
 
     <script>
         const textAbove = document.getElementById('text-above');
@@ -147,22 +147,18 @@
         const blessingText = document.getElementById('blessing-text');
         const hbdMusic = document.getElementById('hbd-music');
 
-        
-        let isGiftOpened = false; // ตัวแปรสำหรับเช็กว่าเปิดกล่องหรือยัง
         // ลำดับที่ 1: คลิกเปิดกล่องของขวัญ
         function openGift() {
-           // ถ้ายังไม่ได้เปิดกล่อง (isGiftOpened เป็น false) ให้ทำงานในนี้
-    if (!isGiftOpened) { 
-        isGiftOpened = true; // ล็อกไว้ทันทีว่าเปิดแล้ว กันคนกดเบิ้ล
+            if (mainDisplay.innerHTML === '🎁') {
                 hbdMusic.play().catch(error => console.log("Audio play blocked"));
                 
                 // เปลี่ยนเป็นไฟล์เค้กตอนจุดไฟ (ใช้ไฟล์ GIF ของคุณแทนได้เลย)
-                mainDisplay.innerHTML = '<img src="cakegif.gif" style="width:200px; height:auto;">'; 
+                mainDisplay.innerHTML = '<img src="cake-lit.gif" style="width:200px; height:auto;">'; 
                 
-                textAbove.textContent = 'อธิษฐานเร็ววว✨';
+                textAbove.textContent = 'อธิษฐานก่อนจิ 🙏✨';
                 
                 setTimeout(() => {
-                    textAbove.textContent = 'พร้อมเป่าเค้กยางงง?';
+                    textAbove.textContent = 'พร้อมเป่าเค้กยางงง? 😚';
                     readyBtn.style.display = 'block';
                 }, 5000);
             }
@@ -174,7 +170,7 @@
             
             let timeLeft = 10;
             const countdownInterval = setInterval(() => {
-                textAbove.textContent = `เป่าเค้กกัน! ( ${timeLeft} วินาที) 🕯️`;
+                textAbove.textContent = `เป่าเค้กกัน! (เหลือเวลาอีก ${timeLeft} วินาที) 🕯️`;
                 timeLeft--;
 
                 if (timeLeft < 0) {
@@ -194,8 +190,8 @@
             smallCakeGif.style.display = 'block'; // เค้กเล็กทำงานที่นี่!
             
             // เปลี่ยนข้อความและแสดงคำอวยพร
-            textAbove.textContent = '🎉 เพี้ยงงงง! 🎉';
-            blessingText.innerHTML = `HAPPY BIRTHDAY KUB 💖<br>มีความสุขมากๆนะค้าบพี่<br>ขอให้ปีนี้เป็นปีที่ดี คิดสิ่งใดก็สมปรารถนานนะค้าบ อิอิ✨`;
+            textAbove.textContent = '🎉 Happy Birthday! 🎉';
+            blessingText.innerHTML = `สุขสันต์วันเกิดนะมีความสุขมากๆ 💖<br>ขอให้ปีนี้เป็นปีที่ดี คิดสิ่งใดก็สมปรารถนา<br>สุขภาพแข็งแรง ร่ำรวยเงินทองน้าาา! ✨`;
             blessingText.style.display = 'block';
 
             // เรียกใช้ฟังก์ชันเปเปอร์ชูท (ยิงพรั่งพรูต่อเนื่อง)
