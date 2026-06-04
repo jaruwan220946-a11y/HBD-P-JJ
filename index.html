@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday 🎂</title>
+    <title>Happy Birthday Project 🎂</title>
     <style>
         * {
             box-sizing: border-box;
@@ -22,28 +22,27 @@
             color: #4a4a4a;
         }
 
-        /* ส่วนข้อความ */
         #text-above {
             font-size: 2rem;
             font-weight: bold;
             margin-bottom: 20px;
             text-align: center;
-            height: 50px; /* ล็อกความสูงไว้ไม่ให้ดันกล่อง */
+            height: 50px;
             color: #ff4d6d;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            z-index: 10;
         }
 
-        /* โซนการแสดงผลหลัก */
         .container {
             position: relative;
-            width: 300px;
-            height: 300px;
+            width: 320px;
+            min-height: 320px;
             display: flex;
+            flex-direction: column; /* เปลี่ยนเป็นแนวตั้งเพื่อจัดรูปภาพและเค้กเล็ก */
             align-items: center;
             justify-content: center;
         }
 
-        /* สไตล์กล่องของขวัญ / เค้ก / รูปภาพ */
         .display-item {
             font-size: 100px;
             cursor: pointer;
@@ -56,19 +55,27 @@
         
         /* สไตล์รูปภาพเจ้าของวันเกิด */
         #birthday-img {
-            width: 100%;
-            height: 100%;
+            width: 250px;
+            height: 250px;
             object-fit: cover;
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
             border: 5px solid #fff;
             display: none;
+            margin-bottom: 15px; /* เว้นระยะห่างด้านล่างสำหรับใส่เค้ก GIF */
         }
 
-        /* ส่วนปุ่ม */
+        /* สไตล์ของเค้ก GIF อันเล็กที่จะอยู่ใต้รูป */
+        #small-cake-gif {
+            width: 100px;
+            height: auto;
+            display: none;
+        }
+
         .btn-container {
             margin-top: 20px;
             height: 50px;
+            z-index: 10;
         }
         button {
             padding: 10px 25px;
@@ -87,15 +94,15 @@
             transform: translateY(-2px);
         }
 
-        /* ข้อความอวยพรตอนท้าย */
         #blessing-text {
             display: none;
             font-size: 1.5rem;
             text-align: center;
             margin-top: 20px;
-            white-space: pre-line; /* เว้นบรรทัดตามที่พิมพ์ใน JS */
+            white-space: pre-line;
             color: #c71585;
             animation: fadeIn 1.5s ease-in-out;
+            z-index: 10;
         }
 
         @keyframes fadeIn {
@@ -103,93 +110,119 @@
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
-    <!-- นำเข้าฟอนต์ Google Font เพื่อความสวยงาม -->
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- เรียกใช้สคริปต์ทำเปเปอร์ชูท (Confetti) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
-    <!-- ข้อความด้านบน -->
-    <div id="text-above"> เปิดๆ </div>
+    <div id="text-above">เปิดๆๆๆๆ</div>
 
-    <!-- พื้นที่แสดงกล่อง / เค้ก / รูปภาพ -->
     <div class="container">
-        <!-- ใช้ Emoji แทนชั่วคราว สามารถเปลี่ยนเป็นรูปภาพเองได้ภายหลัง -->
+        <!-- แสดงกล่องของขวัญตอนเริ่ม -->
         <div id="main-display" class="display-item" onclick="openGift()">🎁</div>
-        <img id="birthday-img" src="https://via.placeholder.com/300" alt="Birthday Person">
+        
+        <!-- รูปภาพเจ้าของวันเกิด -->
+        <img id="birthday-img" src="picpjj.jpg" alt="Birthday Person">
+        
+        <!-- เค้ก GIF อันเล็กใต้รูปภาพ -->
+        <img id="small-cake-gif" src="small-cake.gif" alt="Mini Cake">
     </div>
 
-    <!-- ส่วนปุ่มด้านล่าง -->
     <div class="btn-container">
-        <button id="ready-btn" onclick="startCountdown()">พร้อม!</button>
+        <button id="ready-btn" onclick="startCountdown()">พร้อมแล้ว!</button>
     </div>
 
-    <!-- ข้อความอวยพร -->
     <div id="blessing-text"></div>
 
-    <!-- เสียงเพลง HBD (ใส่ URL ลิงก์เพลงของคุณที่นี่) -->
-    <audio id="hbd-music" src="hbd.mp3" loop></audio>
+    <audio id="hbd-music" src="hbd-song.mp3" loop></audio>
 
     <script>
         const textAbove = document.getElementById('text-above');
         const mainDisplay = document.getElementById('main-display');
         const birthdayImg = document.getElementById('birthday-img');
+        const smallCakeGif = document.getElementById('small-cake-gif');
         const readyBtn = document.getElementById('ready-btn');
         const blessingText = document.getElementById('blessing-text');
         const hbdMusic = document.getElementById('hbd-music');
 
         // ลำดับที่ 1: คลิกเปิดกล่องของขวัญ
         function openGift() {
-            // เช็คว่าอยู่ในสถานะกล่องของขวัญไหม เพื่อกันกดซ้ำ
-            if (mainDisplay.textContent === '🎁') {
-                // เล่นเพลง HBD
-                hbdMusic.play().catch(error => console.log("Audio play blocked by browser. Click interacting solved it."));
+            if (mainDisplay.innerHTML === '<img src="GIFT.gif" style="width:200px; height:auto;">') {
+                hbdMusic.play().catch(error => console.log("Audio play blocked"));
                 
-                // เปลี่ยนเป็นเค้กจุดเทียน
+                // เปลี่ยนเป็นไฟล์เค้กตอนจุดไฟ (ใช้ไฟล์ GIF ของคุณแทนได้เลย)
                 mainDisplay.innerHTML = '<img src="cakegif.gif" style="width:200px; height:auto;">'; 
                 
-                // แสดงข้อความ "อธิษฐานก่อนจิ"
-                textAbove.textContent = 'อธิษฐานก่อนจิ 🙏✨';
+                textAbove.textContent = 'อธิษฐานเร็ววว✨';
                 
-                // นับเวลา 5 วินาที
                 setTimeout(() => {
                     textAbove.textContent = 'พร้อมเป่าเค้กยางงง?';
-                    readyBtn.style.display = 'block'; // แสดงปุ่มพร้อม
+                    readyBtn.style.display = 'block';
                 }, 5000);
             }
         }
 
-        // ลำดับที่ 2: คลิกปุ่มพร้อม เพื่อเริ่มนับถอยหลังเป่าเค้ก
+        // ลำดับที่ 2: คลิกปุ่มพร้อม เพื่อเริ่มนับถอยหลัง 10 วินาที
         function startCountdown() {
-            readyBtn.style.display = 'none'; // ซ่อนปุ่ม
-            textAbove.textContent = 'เป่าเค้กกัน! 🕯️';
+            readyBtn.style.display = 'none';
             
             let timeLeft = 10;
-            
-            // สร้างเลขนับถอยหลังแสดงต่อท้ายข้อความ
             const countdownInterval = setInterval(() => {
-                textAbove.textContent = `เป่าเค้กกัน! (${timeLeft} วินาที)`;
+                textAbove.textContent = `เป่าเค้กกัน! ( ${timeLeft} วินาที) 🕯️`;
                 timeLeft--;
 
                 if (timeLeft < 0) {
                     clearInterval(countdownInterval);
-                    finishCake(); // เมื่อครบ 10 วินาที ให้จบขั้นตอน
+                    finishCake(); 
                 }
             }, 1000);
         }
 
-        // ลำดับที่ 3: เทียนดับ และแสดงรูปพร้อมคำอวยพร
+        // ลำดับที่ 3: ดับเทียน ยิงเปเปอร์ชูท แสดงรูปและคำอวยพร
         function finishCake() {
-            // เปลี่ยนเค้กเป็นแบบไม่มีเทียน (หรือดับเทียน) ในที่นี้เปลี่ยนเป็นรูปภาพแทนตามโจทย์
+            // ซ่อนเค้กหลักก้อนโต
             mainDisplay.style.display = 'none'; 
             
-            // ใส่ Link รูปภาพจริงของคุณที่นี่
-            birthdayImg.src = 'picpjj.jpg'; // รูปสุ่มจากเน็ต เปลี่ยนเป็นรูปเพื่อนได้เลย
+            // แสดงรูปภาพเจ้าของวันเกิด และเค้ก GIF อันเล็กด้านล่างรูปภาพ
             birthdayImg.style.display = 'block';
+            smallCakeGif.style.display = 'block'; // เค้กเล็กทำงานที่นี่!
             
-            // แสดงคำอวยพร
-            textAbove.textContent = '🎉 เพี้ยงงง! 🎉';
-            blessingText.innerHTML = `HAPPY BIRTHFAY KUB 💖<br>มีความสุขมากๆนะค้าบพี่<br> ขอให้ปีนี้เป็นปีที่ดี คิดสิ่งใดก็สมปรารถนานนะค้าบ อิอิ ✨`;
+            // เปลี่ยนข้อความและแสดงคำอวยพร
+            textAbove.textContent = '🎉 Happy Birthday! 🎉';
+            blessingText.innerHTML = `HAPPY BIRTHFAY KUB 💖<br>มีความสุขมากๆนะค้าบพี่<br>ขอให้ปีนี้เป็นปีที่ดี คิดสิ่งใดก็สมปรารถนานนะค้าบ อิอิ✨`;
             blessingText.style.display = 'block';
+
+            // เรียกใช้ฟังก์ชันเปเปอร์ชูท (ยิงพรั่งพรูต่อเนื่อง)
+            shootConfetti();
+        }
+
+        // ฟังก์ชันสร้างลูกเล่นเปเปอร์ชูท (ยิงจากซ้ายและขวาพร้อมกันให้ดูอลังการ)
+        function shootConfetti() {
+            var duration = 4 * 1000; // ให้เปเปอร์ชูทยิงต่อเนื่องเป็นเวลา 4 วินาที
+            var end = Date.now() + duration;
+
+            (function frame() {
+                // ยิงจากฝั่งซ้าย
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0, y: 0.8 }
+                });
+                // ยิงจากฝั่งขวา
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1, y: 0.8 }
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
         }
     </script>
 </body>
