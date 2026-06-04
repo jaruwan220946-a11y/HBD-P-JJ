@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Project 🎂</title>
+    <title>Happy Birthday 🎂</title>
     <style>
         * {
             box-sizing: border-box;
@@ -145,14 +145,14 @@
                 hbdMusic.play().catch(error => console.log("Audio play blocked by browser. Click interacting solved it."));
                 
                 // เปลี่ยนเป็นเค้กจุดเทียน
-                mainDisplay.textContent = '🎂'; 
+                mainDisplay.innerHTML = '<img src="cakegif.gif">'; 
                 
                 // แสดงข้อความ "อธิษฐานก่อนจิ"
                 textAbove.textContent = 'อธิษฐานก่อนจิ 🙏✨';
                 
                 // นับเวลา 5 วินาที
                 setTimeout(() => {
-                    textAbove.textContent = 'พร้อมเป่าเค้กยางงง? 😚';
+                    textAbove.textContent = 'พร้อมเป่าเค้กยางงง?';
                     readyBtn.style.display = 'block'; // แสดงปุ่มพร้อม
                 }, 5000);
             }
