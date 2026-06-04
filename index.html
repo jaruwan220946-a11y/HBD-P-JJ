@@ -117,26 +117,26 @@
 </head>
 <body>
 
-    <div id="text-above">🎁 จิ้มเปิดกล่องของขวัญเล๊ยยย!</div>
+    <div id="text-above">เปิดๆๆๆ</div>
 
     <div class="container">
         <!-- แสดงกล่องของขวัญตอนเริ่ม -->
-        <div id="main-display" class="display-item" onclick="openGift()">🎁</div>
+        <div id="main-display" class="display-item" onclick="openGift()"><img src="gifttt.gif" style="width:200px; height:auto;"></div>
         
         <!-- รูปภาพเจ้าของวันเกิด -->
-        <img id="birthday-img" src="birthday-girl.jpg" alt="Birthday Person">
+        <img id="birthday-img" src="picpjj.jpg" alt="Birthday Person">
         
         <!-- เค้ก GIF อันเล็กใต้รูปภาพ -->
-        <img id="small-cake-gif" src="small-cake.gif" alt="Mini Cake">
+        <img id="small-cake-gif" src="cakelit.gif" alt="Mini Cake">
     </div>
 
     <div class="btn-container">
-        <button id="ready-btn" onclick="startCountdown()">พร้อมแล้ว!</button>
+        <button id="ready-btn" onclick="startCountdown()">พร้อม!</button>
     </div>
 
     <div id="blessing-text"></div>
 
-    <audio id="hbd-music" src="hbd-song.mp3" loop></audio>
+    <audio id="hbd-music" src="hbd.mp3" loop></audio>
 
     <script>
         const textAbove = document.getElementById('text-above');
@@ -149,16 +149,16 @@
 
         // ลำดับที่ 1: คลิกเปิดกล่องของขวัญ
         function openGift() {
-            if (mainDisplay.innerHTML === '🎁') {
+            if (mainDisplay.innerHTML === '<img src="gifttt.gif" style="width:200px; height:auto;">') {
                 hbdMusic.play().catch(error => console.log("Audio play blocked"));
                 
                 // เปลี่ยนเป็นไฟล์เค้กตอนจุดไฟ (ใช้ไฟล์ GIF ของคุณแทนได้เลย)
-                mainDisplay.innerHTML = '<img src="cake-lit.gif" style="width:200px; height:auto;">'; 
+                mainDisplay.innerHTML = '<img src="cakegif.gif" style="width:200px; height:auto;">'; 
                 
-                textAbove.textContent = 'อธิษฐานก่อนจิ 🙏✨';
+                textAbove.textContent = 'อธิษฐานเร็ววว✨';
                 
                 setTimeout(() => {
-                    textAbove.textContent = 'พร้อมเป่าเค้กยางงง? 😚';
+                    textAbove.textContent = 'พร้อมเป่าเค้กยางงง?';
                     readyBtn.style.display = 'block';
                 }, 5000);
             }
@@ -190,8 +190,8 @@
             smallCakeGif.style.display = 'block'; // เค้กเล็กทำงานที่นี่!
             
             // เปลี่ยนข้อความและแสดงคำอวยพร
-            textAbove.textContent = '🎉 Happy Birthday! 🎉';
-            blessingText.innerHTML = `สุขสันต์วันเกิดนะมีความสุขมากๆ 💖<br>ขอให้ปีนี้เป็นปีที่ดี คิดสิ่งใดก็สมปรารถนา<br>สุขภาพแข็งแรง ร่ำรวยเงินทองน้าาา! ✨`;
+            textAbove.textContent = '🎉 เพี้ยงงง! 🎉';
+            blessingText.innerHTML = `HAPPY BIRTHDAY KUB 💖<br>มีความสุขมากๆค้าบพี่<br>ขอให้เป็นปีที่ดีน้า คิดสิ่งใดก็ขอให้สมปราถนาค้าบ อิอิ! ✨`;
             blessingText.style.display = 'block';
 
             // เรียกใช้ฟังก์ชันเปเปอร์ชูท (ยิงพรั่งพรูต่อเนื่อง)
