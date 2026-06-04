@@ -121,13 +121,13 @@
 
     <div class="container">
         <!-- แสดงกล่องของขวัญตอนเริ่ม -->
-        <div id="main-display" class="display-item" onclick="openGift()">🎁</div>
+        <div id="main-display" class="display-item" onclick="openGift()"><img src="gift.gif" style="width:200px; height:auto;"></div>
         
         <!-- รูปภาพเจ้าของวันเกิด -->
         <img id="birthday-img" src="picpjj.jpg" alt="Birthday Person">
         
         <!-- เค้ก GIF อันเล็กใต้รูปภาพ -->
-        <img id="small-cake-gif" src="small-cake.gif" alt="Mini Cake">
+        <img id="small-cake-gif" src="cakelit.gif" alt="Mini Cake">
     </div>
 
     <div class="btn-container">
@@ -149,7 +149,7 @@
 
         // ลำดับที่ 1: คลิกเปิดกล่องของขวัญ
         function openGift() {
-            if (mainDisplay.innerHTML === '🎁') {
+            if (mainDisplay.innerHTML === '<img src="gift.gif" style="width:200px; height:auto;">') {
                 hbdMusic.play().catch(error => console.log("Audio play blocked"));
                 
                 // เปลี่ยนเป็นไฟล์เค้กตอนจุดไฟ (ใช้ไฟล์ GIF ของคุณแทนได้เลย)
@@ -190,7 +190,7 @@
             smallCakeGif.style.display = 'block'; // เค้กเล็กทำงานที่นี่!
             
             // เปลี่ยนข้อความและแสดงคำอวยพร
-            textAbove.textContent = '🎉 Happy Birthday! 🎉';
+            textAbove.textContent = '🎉 เพี้ยง! 🎉';
             blessingText.innerHTML = `HAPPY BIRTHFAY KUB 💖<br>มีความสุขมากๆนะค้าบพี่<br>ขอให้ปีนี้เป็นปีที่ดี คิดสิ่งใดก็สมปรารถนานนะค้าบ อิอิ✨`;
             blessingText.style.display = 'block';
 
