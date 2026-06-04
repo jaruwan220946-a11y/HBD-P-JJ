@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Surprise!</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ข้อความแนะนำ/อวยพร */
+        #status-text {
+            font-size: 2rem;
+            color: #ff4d6d;
+            font-weight: bold;
+            margin-bottom: 20px;
+            min-height: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+        }
+
+        /* กล่องของขวัญ (Click to open) */
+        .gift-box {
+            font-size: 100px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+        .gift-box:hover {
+            transform: scale(1.1);
+        }
+
+        /* เค้กวันเกิด */
+        .cake-container {
+            display: none;
+            position: relative;
+            font-size: 100px;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        /* เปลวไฟเทียน */
+        .flame {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 30px;
+            animation: flicker 0.1s ease infinite alternate;
+        }
+
+        /* รูปภาพเจ้าของวันเกิด */
+        .birthday-img {
+            display: none;
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            margin-top: 20px;
+            animation: scaleUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* ส่วนของคำอวยพรยาวๆ */
+        .wishes {
+            display: none;
+            font-size: 1.5rem;
+            color: #c9184a;
+            margin-top: 20px;
+            line-height: 1.6;
+            animation: fadeIn 1.5s ease forwards;
+        }
+
+        /* Animations */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes scaleUp {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+            100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+        }
+    </style>
+    <!-- นำเข้าฟอนต์ Google Font เพื่อความสวยงาม -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <!-- ข้อความแสดงสถานะ -->
+        <div id="status-text">🎁 จิ้มเปิดกล่องของขวัญสิ! 🎁</div>
+
+        <!-- กล่องของขวัญ (Emoji) -->
+        <div id="gift" class="gift-box" onclick="openGift()">🎁</div>
+
+        <!-- เค้กวันเกิด (Emoji) -->
+        <div id="cake" class="cake-container">
+            <span id="candle-flame" class="flame">🔥</span>
+            🎂
+        </div>
+
+        <!-- รูปภาพเจ้าของวันเกิด (เปลี่ยน URL รูปภาพตรงนี้ได้เลย) -->
+        <img id="profile-pic" class="birthday-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500" alt="Birthday Person">
+
+        <!-- ข้อความอวยพร -->
+        <div id="wishes-text" class="wishes">
+            <h3>✨ Happy Birthday To You! ✨</h3>
+            <p>ขอให้มีความสุขมากๆ สุขภาพร่างกายแข็งแรง <br> คิดสิ่งใดก็สมปรารถนา ยิ้มเยอะๆ ในทุกๆ วันนะ! 💖</p>
+        </div>
+    </div>
+
+    <!-- ไฟล์เพลง Happy Birthday (สามารถเปลี่ยนลิงก์เพลง .mp3 เองได้) -->
+    <audio id="bday-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function openGift() {
+            const gift = document.getElementById('gift');
+            const cake = document.getElementById('cake');
+            const statusText = document.getElementById('status-text');
+            const music = document.getElementById('bday-music');
+
+            // 1. ซ่อนกล่องของขวัญ และแสดงเค้ก
+            gift.style.display = 'none';
+            cake.style.display = 'block';
+
+            // 2. เล่นเพลง Happy Birthday
+            music.play().catch(error => console.log("Audio play blocked by browser:", error));
+
+            // 3. แสดงข้อความ "อธิฐานก่อนจิ" เป็นเวลา 8 วินาที
+            statusText.innerText = "✨ อธิฐานก่อนจิ ✨";
+
+            setTimeout(() => {
+                // 4. หลังจาก 8 วินาที เริ่มนับถอยหลัง 20 วินาที
+                let timeLeft = 20;
+                statusText.innerText = `⏳ นับถอยหลังเป่าเค้ก: ${timeLeft} วินาที`;
+
+                const countdownInterval = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft > 0) {
+                        statusText.innerText = `⏳ นับถอยหลังเป่าเค้ก: ${timeLeft} วินาที`;
+                    } else {
+                        // เมื่อครบ 20 วินาที (เวลาเป็น 0)
+                        clearInterval(countdownInterval);
+                        extinguishCandle();
+                    }
+                }, 1000);
+
+            }, 8000); // 8000 มิลลิวินาที = 8 วินาที
+        }
+
+        function extinguishCandle() {
+            const flame = document.getElementById('candle-flame');
+            const statusText = document.getElementById('status-text');
+            const profilePic = document.getElementById('profile-pic');
+            const wishesText = document.getElementById('wishes-text');
+
+            // 5. ดับเทียน (ซ่อนเปลวไฟ)
+            flame.style.display = 'none';
+
+            // 6. แสดงคำอวยพรและรูปภาพ
+            statusText.innerText = "🎉 สุขสันต์วันเกิดนะ! 🎉";
+            profilePic.style.display = 'block';
+            wishesText.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
