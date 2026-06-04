@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Project 🎂</title>
+    <title>Happy Birthday 🎂</title>
     <style>
         * {
             box-sizing: border-box;
@@ -131,12 +131,12 @@
     </div>
 
     <div class="btn-container">
-        <button id="ready-btn" onclick="startCountdown()">พร้อมแล้ว!</button>
+        <button id="ready-btn" onclick="startCountdown()">พร้อม!</button>
     </div>
 
     <div id="blessing-text"></div>
 
-    <audio id="hbd-music" src="hbd-song.mp3" loop></audio>
+    <audio id="hbd-music" src="hbd.mp3" loop></audio>
 
     <script>
         const textAbove = document.getElementById('text-above');
@@ -149,7 +149,7 @@
 
         // ลำดับที่ 1: คลิกเปิดกล่องของขวัญ
         function openGift() {
-            if (mainDisplay.innerHTML === '<img src="GIFT.gif" style="width:200px; height:auto;">') {
+            if (mainDisplay.innerHTML === '<img src="gift.gif" style="width:200px; height:auto;">') {
                 hbdMusic.play().catch(error => console.log("Audio play blocked"));
                 
                 // เปลี่ยนเป็นไฟล์เค้กตอนจุดไฟ (ใช้ไฟล์ GIF ของคุณแทนได้เลย)
