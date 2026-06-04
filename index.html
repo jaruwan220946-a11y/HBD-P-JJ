@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Project 🎂</title>
+    <title>Happy Birthday 🎂</title>
     <style>
         * {
             box-sizing: border-box;
@@ -19,7 +19,7 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            color: #4a4a4a;
+            color: #000000;
         }
 
         #text-above {
@@ -127,7 +127,7 @@
         <img id="birthday-img" src="picpjj.jpg" alt="Birthday Person">
         
         <!-- เค้ก GIF อันเล็กใต้รูปภาพ -->
-        <img id="small-cake-gif" src="cakelit.gif" alt="Mini Cake">
+        <img id="small-cake-gif" src="cakelit.jpg" alt="Mini Cake">
     </div>
 
     <div class="btn-container">
@@ -170,7 +170,7 @@
             
             let timeLeft = 10;
             const countdownInterval = setInterval(() => {
-                textAbove.textContent = `เป่าเค้กกัน! (เหลือเวลาอีก ${timeLeft} วินาที) 🕯️`;
+                textAbove.textContent = `เป่าเค้กกัน! (${timeLeft} วินาที) 🕯️`;
                 timeLeft--;
 
                 if (timeLeft < 0) {
